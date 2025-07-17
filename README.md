@@ -40,12 +40,15 @@ This project is a secure FastAPI application that includes both user authenticat
 - Make sure you have Python 3.11 and PostgreSQL installed locally, or use Docker to simulate the DB.
 - Clone the repo
 - Install dependencies: pip install -r requirements.txt
+- uvicorn app.main:app --reload
+- open: http://127.0.0.1:8000/docs
+
 
 ## Run with Docker
 
 - docker pull eddysantana/fastapi-userapp:latest
 - docker run -d -p 8000:8000 eddysantana/fastapi-userapp:latest
-- Open your web browser: http://127.0.0.1:8000/docs
+- Open your web browser: http://localhost:8000/docs 
 
 ## CI/CD Workflow
 - GitHub Actions is configured to:
