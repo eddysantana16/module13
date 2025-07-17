@@ -5,3 +5,4 @@ pydantic[email]
 passlib[bcrypt]
 pytest
 httpx
+psycopg2-binary
