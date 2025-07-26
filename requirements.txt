@@ -7,3 +7,4 @@ pytest
 httpx
 psycopg2-binary
 python-jose
+pytest-playwright
