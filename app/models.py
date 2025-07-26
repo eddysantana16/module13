@@ -1,9 +1,10 @@
 from sqlalchemy import Column, Integer, String, Float
-from app.database import Base  # only one Base import
+from app.database import Base
 
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)  # Added for registration support
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
 
