@@ -2,8 +2,7 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 
 # --- User Schemas ---
 class UserCreate(BaseModel):
-    username: str
-    email: str
+    email: EmailStr
     password: str
 
 class UserLogin(BaseModel):

@@ -24,6 +24,5 @@ def test_register_user():
     })
     assert response.status_code == 200
     data = response.json()
-    assert data["username"] == "testuser"
     assert data["email"] == "test@example.com"
     assert "id" in data

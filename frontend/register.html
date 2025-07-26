@@ -22,40 +22,39 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const confirm = document.getElementById("confirm").value;
-      const messageElement = document.getElementById("message");
+      const message = document.getElementById("message");
 
-      // Client-side validation
       if (!email.includes("@")) {
-        messageElement.textContent = "Invalid email format.";
+        message.textContent = "Invalid email format.";
         return;
       }
 
       if (password.length < 8) {
-        messageElement.textContent = "Password must be at least 8 characters.";
+        message.textContent = "Password must be at least 8 characters.";
         return;
       }
 
       if (password !== confirm) {
-        messageElement.textContent = "Passwords do not match.";
+        message.textContent = "Passwords do not match.";
         return;
       }
 
       try {
-        const response = await fetch("/api/register", {
+        const response = await fetch("http://localhost:8000/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
 
         if (response.ok) {
-          messageElement.textContent = "Registration successful!";
+          message.textContent = "Registration successful!";
         } else {
-          messageElement.textContent = data.detail || "Registration failed.";
+          message.textContent = typeof data.detail === "string" ? data.detail : "Registration failed.";
         }
       } catch (err) {
-        messageElement.textContent = "Network error.";
+        message.textContent = "Network error.";
       }
     });
   </script>

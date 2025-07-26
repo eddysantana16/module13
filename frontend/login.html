@@ -20,30 +20,27 @@
 
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-      const messageElement = document.getElementById("message");
+      const message = document.getElementById("message");
 
       try {
-        const response = await fetch("/api/login", {
+        const response = await fetch("http://localhost:8000/api/login", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
 
-        if (response.ok && data.access_token) {
+        if (response.ok) {
           localStorage.setItem("token", data.access_token);
-          messageElement.textContent = "Login successful!";
+          message.textContent = "Login successful!";
         } else {
-          messageElement.textContent = data.detail || "Invalid email or password.";
+          message.textContent = typeof data.detail === "string" ? data.detail : "Login failed.";
         }
-      } catch (error) {
-        messageElement.textContent = "Network error.";
+      } catch (err) {
+        message.textContent = "Network error.";
       }
     });
   </script>
 </body>
 </html>
-
