@@ -1,48 +1,68 @@
-<script>
-  document.getElementById("register-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+</head>
+<body>
+  <h1>Register</h1>
+  <form id="register-form">
+    <input type="email" id="email" placeholder="Email" required /><br />
+    <input type="password" id="password" placeholder="Password" required /><br />
+    <input type="password" id="confirm" placeholder="Confirm Password" required /><br />
+    <button type="submit">Register</button>
+  </form>
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirm").value;
-    const message = document.getElementById("message");
+  <p id="message"></p>
 
-    if (!email.includes("@")) {
-      message.textContent = "Invalid email format.";
-      return;
-    }
+  <script>
+    document.getElementById("register-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    if (password.length < 8) {
-      message.textContent = "Password must be at least 8 characters.";
-      return;
-    }
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+      const message = document.getElementById("message");
 
-    if (password !== confirm) {
-      message.textContent = "Passwords do not match.";
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/users/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-          username: email.split("@")[0]  // Use email prefix as username
-        }),
-      });
-
-      if (response.ok) {
-        message.textContent = "Registration successful!";
-      } else {
-        const data = await response.json();
-        message.textContent = typeof data.detail === "string"
-          ? data.detail
-          : "Registration failed.";
+      if (!email.includes("@")) {
+        message.textContent = "Invalid email format.";
+        return;
       }
-    } catch (err) {
-      message.textContent = "Network error.";
-    }
-  });
-</script>
+
+      if (password.length < 8) {
+        message.textContent = "Password must be at least 8 characters.";
+        return;
+      }
+
+      if (password !== confirm) {
+        message.textContent = "Passwords do not match.";
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/users/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+            username: email.split("@")[0] // derive username
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          message.textContent = "Registration successful!";
+        } else {
+          message.textContent = typeof data.detail === "string"
+            ? data.detail
+            : "Registration failed.";
+        }
+      } catch (err) {
+        message.textContent = "Network error.";
+      }
+    });
+  </script>
+</body>
+</html>
