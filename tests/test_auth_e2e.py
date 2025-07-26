@@ -8,6 +8,10 @@ def test_successful_registration(page: Page):
     page.fill("#email", "testuser@example.com")
     page.fill("#password", "securepass123")
     page.fill("#confirm", "securepass123")
+    
+    # Fill username field if present (depends on your HTML form)
+    # But if it's auto-derived in JS from email, no need to do this here
+    
     page.click("button")
 
     expect(page.locator("#message")).to_have_text("Registration successful!")
