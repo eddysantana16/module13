@@ -1,17 +1,14 @@
 from sqlalchemy import Column, Integer, String, Float
-from app.database import Base
+from app.database import Base  # only one Base import
 
 class User(Base):
     __tablename__ = "users"
-
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    password_hash = Column(String)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
 class Calculation(Base):
     __tablename__ = "calculations"
-
     id = Column(Integer, primary_key=True, index=True)
     operation = Column(String)
     operand1 = Column(Float)

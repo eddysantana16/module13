@@ -1,14 +1,26 @@
-# FastAPI User & Calculation API (Module 12)
-This project is a secure FastAPI application that includes both user authentication and calculation CRUD functionality. It uses SQLAlchemy for ORM, Pydantic for schema validation, and is fully tested, containerized with Docker, and integrated with a CI/CD pipeline via GitHub Actions and Docker Hub.
+# FastAPI JWT Auth & Calculation API (Module 13)
+This project is a secure FastAPI application for user authentication using JWT and basic calculation features. It includes a front-end for login and registration, full E2E testing with Playwright, and CI/CD integration via GitHub Actions and Docker Hub.
+
 
 ## Features
 
-- User registration with password hashing using `passlib`
-- Full Calculation CRUD (Browse, Read, Edit, Add, Delete)
-- Pydantic v2-compliant schemas using `model_config`
-- Integration tests using `pytest` and PostgreSQL in CI
-- GitHub Actions workflow with PostgreSQL service
-- Docker image built and pushed to Docker Hub on every push to `main`
+- JWT-based User Authentication
+- `/api/register` hashes passwords and stores users securely
+- `/api/login` verifies credentials and returns JWT
+- Front-End Pages
+- `register.html` and `login.html` with client-side validation
+- JWT stored in `localStorage` after login
+- Calculation CRUD
+- Full Create, Read, Update, Delete (BREAD) endpoints for calculations
+- Security
+- Passwords hashed with `bcrypt` via `passlib`
+- Data validated using Pydantic v2 models
+- Testing
+- Playwright E2E tests for auth flow
+- Pytest integration and unit tests
+- CI/CD
+- GitHub Actions pipeline spins up PostgreSQL and FastAPI
+- Runs all tests and pushes Docker image on success
 
 ## Project Structure
 - module12/
@@ -19,11 +31,13 @@ This project is a secure FastAPI application that includes both user authenticat
     - │ ├── schemas.py
     - │ ├── security.py
     - │ ├── database.py
+    - │ ├── auth.py
     - │ └── routes/
     - │     └── users.py
     - │     └── calculations.py
     - ├── tests/
     - │ ├── init.py
+    - │ ├── test_auth_e2e.py
     - │ ├── test_security.py
     - │ └── test_users.py
     - │ └── test_calculations.py
@@ -37,11 +51,12 @@ This project is a secure FastAPI application that includes both user authenticat
 
 ## Running the App Locally
 
-- Make sure you have Python 3.11 and PostgreSQL installed locally, or use Docker to simulate the DB.
-- Clone the repo
-- Install dependencies: pip install -r requirements.txt
+- git clone <https://github.com/eddysantana16/module13.git>
+- cd <module13>
+- pip install -r requirements.txt
 - uvicorn app.main:app --reload
-- open: http://127.0.0.1:8000/docs
+- open: Open http://localhost:8000/register or http://localhost:8000/login
+- API docs: http://localhost:8000/docs
 
 
 ## Run with Docker
@@ -59,11 +74,14 @@ This project is a secure FastAPI application that includes both user authenticat
 - File: .github/workflows/ci.yml
 
 ## Testing
-- to run tests locally: pytest
-- cludes full coverage for: user registration, Calculation: Create, Read, Update, Delete, Invalid ID
+- to run tests locally: pytest tests/
+- Includes full coverage for: user registration, Calculation: Create, Read, Update, Delete, Invalid ID
 
 ## Docker Hub Repository
-- Docker Image URL: https://hub.docker.com/r/eddysantana/fastapi-userapp
+- docker pull <eddysantana>/fastapi-userapp:latest
+- docker run -d -p 8000:8000 <eddysantana>/fastapi-userapp:latest
+- Visit: http://localhost:8000
+- Docker Image URL: 
 
 ## Author
 - Eddy Santana
