@@ -33,12 +33,13 @@
         }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         message.textContent = "Registration successful!";
       } else {
-        message.textContent = data.detail || "Registration failed.";
+        const data = await response.json();
+        message.textContent = typeof data.detail === "string"
+          ? data.detail
+          : "Registration failed.";
       }
     } catch (err) {
       message.textContent = "Network error.";
