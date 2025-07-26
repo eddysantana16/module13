@@ -6,7 +6,7 @@ def test_password_hash_and_verify():
 
     # Check the hash is not equal to the original
     assert hashed != password
-    assert security.verify_password(password, hashed) == True
+    assert security.verify_password(password, hashed) is True
 
     # Check that a wrong password fails
-    assert security.verify_password("WrongPassword", hashed) == False
+    assert security.verify_password("WrongPassword", hashed) is False

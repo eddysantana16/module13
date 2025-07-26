@@ -1,23 +1,17 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from app.database import get_db
-from app import models, schemas
+from sqlalchemy import Column, Integer, String, Float
+from app.database import Base
 
-router = APIRouter()
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
-@router.post("/users/", response_model=schemas.UserRead)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    # Check if user already exists
-    existing = db.query(models.User).filter(models.User.email == user.email).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    db_user = models.User(
-        username=user.username,
-        email=user.email,
-        hashed_password=user.password  # No hashing, raw password for now
-    )
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+class Calculation(Base):
+    __tablename__ = "calculations"
+    id = Column(Integer, primary_key=True, index=True)
+    operation = Column(String, nullable=False)
+    operand1 = Column(Float, nullable=False)
+    operand2 = Column(Float, nullable=False)
+    result = Column(Float, nullable=False)

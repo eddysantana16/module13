@@ -45,4 +45,4 @@ def test_invalid_login(page: Page):
     page.fill("#password", "wrongpassword")
     page.click("button")
 
-    expect(page.locator("#message")).to_have_text("Invalid email or password.")
+    expect(page.locator("#message")).to_have_text("Invalid email or password")

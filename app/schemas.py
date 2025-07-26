@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
 
-# --- User Schemas ---
 class UserCreate(BaseModel):
+    username: str
     email: EmailStr
     password: str
 
@@ -11,10 +11,10 @@ class UserLogin(BaseModel):
 
 class UserRead(BaseModel):
     id: int
+    username: str
     email: EmailStr
     model_config = ConfigDict(from_attributes=True)
 
-# --- Calculation Schemas ---
 class CalculationBase(BaseModel):
     operation: str
     operand1: float
